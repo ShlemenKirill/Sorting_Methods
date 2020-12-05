@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Sorting_Methods
 {
@@ -6,28 +7,31 @@ namespace Sorting_Methods
     {
         static void Main(string[] args)
         {
-            var array = CreateArray();           
-            
+            var array = CreateArray();
+            Stopwatch stopwatchBubbleSort = new Stopwatch();            
             BubbleSort bubbleSort = new BubbleSort();
-            var arrayBubbleSorted = bubbleSort.BubbleSortMethod(array);            
-            Console.WriteLine($"Bubble Sort Method = {IsSorted(arrayBubbleSorted)}"); 
-            
-            QuickSort quickSort = new QuickSort();
-            var quckSorted = quickSort.QuickSortMethod(array);            
-            Console.WriteLine($"Bubble Sort Method = {IsSorted(quckSorted)}");
+            stopwatchBubbleSort.Start();
+            var arrayBubbleSorted = bubbleSort.BubbleSortMethod(array);
+            stopwatchBubbleSort.Stop();            
+            Console.WriteLine($"Bubble Sort Method = {IsSorted(arrayBubbleSorted)} in {stopwatchBubbleSort.ElapsedTicks} ticks");
 
-            BogoSort bogoSort = new BogoSort();
-            var bogoSorted = bogoSort.BogoSortMethod(array);            
-            Console.WriteLine($"BogoSort Method = {IsSorted(bogoSorted)}");
+            var testQuickSortArray = CreateArray();
+            QuickSort quickSort = new QuickSort();
+            Stopwatch stopwatchQuickSort = new Stopwatch();
+            stopwatchQuickSort.Start();
+            var quckSorted = quickSort.QuickSortMethod(testQuickSortArray);
+            stopwatchQuickSort.Stop();
+            Console.WriteLine($"Quick Sort Method = {IsSorted(quckSorted)} in {stopwatchQuickSort.ElapsedTicks} ticks");
+            
         }
 
         public static int[] CreateArray()
         {
             Random random = new Random();
-            int[] array = new int[100];
-            for (int i = 0; i < 100; i++)
+            int[] array = new int[10000];
+            for (int i = 0; i < 10000; i++)
             {
-                array[i] = random.Next(1, 1000);
+                array[i] = random.Next(1, 10000);
             }
             return array;
         }
